@@ -1,0 +1,31 @@
+类变量和类方法：
+    类变量是在类的所有实例中共享的变量。也就是说，类变量可以被所有的本类实例访问。
+    类变量以‘@@’作为前缀，类变量必须在类定义中被初始化，如下面实例所示。
+
+    类方法使用 def self.methodName() 定义，类方法以 end 分隔符结尾。
+    类方法可使用带有类名称的 className.methodName 形式调用，如下面实例所示：
+
+    class Box
+       # 初始化类变量
+       @@count = 0
+       def initialize(w,h)
+          # 给实例变量赋值
+          @width, @height = w, h
+
+          @@count += 1
+       end
+
+       def self.printCount()
+          puts "Box count is : #@@count"
+       end
+    end
+
+    # 创建两个对象
+    box1 = Box.new(10, 20)
+    box2 = Box.new(30, 100)
+
+    # 调用类方法来输出盒子计数
+    Box.printCount()
+    当上面的代码执行时，它会产生以下结果：
+
+    Box count is : 2

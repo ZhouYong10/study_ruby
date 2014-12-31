@@ -1,0 +1,101 @@
+实例变量访问器：
+    为了在类的外部使用实例变量，我们必须在访问器方法内部定义这些变量，这些访问器方法也被称为获取器方法。
+    下面的实例演示了访问器方法的用法：
+
+    # 定义类
+    class Box
+       # 构造器方法
+       def initialize(w,h)
+          @width, @height = w, h
+       end
+
+       # 访问器方法
+       def printWidth
+          @width
+       end
+
+       def printHeight
+          @height
+       end
+    end
+
+    # 创建对象
+    box = Box.new(10, 20)
+
+    # 使用访问器方法
+    x = box.printWidth()
+    y = box.printHeight()
+
+    puts "Width of the box is : #{x}"
+    puts "Height of the box is : #{y}"
+    当上面的代码执行时，它会产生以下结果：
+
+    Width of the box is : 10
+    Height of the box is : 20
+
+    与用于访问变量值的访问器方法类似，Ruby 提供了一种在类的外部设置变量值的方式，也就是所谓的设置器方法，定义如下：
+
+    # 定义类
+    class Box
+       # 构造器方法
+       def initialize(w,h)
+          @width, @height = w, h
+       end
+
+       # 访问器方法
+       def getWidth
+          @width
+       end
+       def getHeight
+          @height
+       end
+
+       # 设置器方法
+       def setWidth=(value)
+          @width = value
+       end
+       def setHeight=(value)
+          @height = value
+       end
+    end
+
+    # 创建对象
+    box = Box.new(10, 20)
+
+    # 使用设置器方法
+    box.setWidth = 30
+    box.setHeight = 50
+
+    # 使用访问器方法
+    x = box.getWidth()
+    y = box.getHeight()
+
+    puts "Width of the box is : #{x}"
+    puts "Height of the box is : #{y}"
+    当上面的代码执行时，它会产生以下结果：
+
+    Width of the box is : 30
+    Height of the box is : 50
+
+
+    Ruby中提供了设置访问器的快捷方式：
+     class Box
+        def initialize(width,height)
+          @width = width
+          @height = height
+        end
+
+        def area
+          @width * @height
+        end
+
+        attr_reader :width, :height   #读取访问器
+        attr_writer :width, :height   #赋值访问器
+
+     end
+
+     box = Box.new(10,20)
+     box.area                  #200
+
+     box.width = 20
+     box.area                  #400

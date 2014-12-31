@@ -1,0 +1,17 @@
+类信息：
+    如果类定义是可执行代码，这意味着，它们可在某个对象的上下文中执行，self 必须引用一些东西。
+    让我们来看看下面的实例：.
+
+    #!/usr/bin/ruby -w
+
+    class Box
+       # 输出类信息
+       puts "Type of self = #{self.type}"
+       puts "Name of self = #{self.name}"
+    end
+    当上面的代码执行时，它会产生以下结果：
+
+    Type of self = Class
+    Name of self = Box
+
+    这意味着类定义可通过把该类作为当前对象来执行，同时也意味着元类和父类中的该方法在方法定义执行期间是可用的。

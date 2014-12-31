@@ -1,0 +1,36 @@
+类常量：
+    可以在类的内部定义一个常量，通过把一个直接的数值或字符串值赋给一个变量来定义的，
+    常量的定义不需要使用 @ 或 @@。按照惯例，常量的名称使用大写。
+    类常量可被继承，也可像实例方法一样被重载。
+
+    一旦常量被定义，您就不能改变它的值，您可以在类的内部直接访问常量，就像是访问变量一样，
+    但是如果您想要在类的外部访问常量，那么您必须使用 classname::constant，
+    如下面实例所示。
+
+    # 定义类
+    class Box
+       BOX_COMPANY = "TATA Inc"
+       BOXWEIGHT = 10
+       # 构造器方法
+       def initialize(w,h)
+          @width, @height = w, h
+       end
+       # 实例方法
+       def getArea
+          @width * @height
+       end
+    end
+
+    # 创建对象
+    box = Box.new(10, 20)
+
+    # 调用实例方法
+    a = box.getArea()
+    puts "Area of the box is : #{a}"
+    puts Box::BOX_COMPANY
+    puts "Box weight is: #{Box::BOXWEIGHT}"
+    当上面的代码执行时，它会产生以下结果：
+
+    Area of the box is : 200
+    TATA Inc
+    Box weight is: 10

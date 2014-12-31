@@ -1,0 +1,60 @@
+冻结对象：
+    有时候，我们想要防止对象被改变。
+    在 Object 中，freeze 方法可实现这点，它能有效地把一个对象变成一个常量。
+    任何对象都可以通过调用 Object.freeze 进行冻结。
+    冻结对象不能被修改，也就是说，您不能改变它的实例变量。
+
+    可以使用 Object.frozen? 方法检查一个给定的对象是否已经被冻结。
+    如果对象已被冻结，该方法将返回 true，否则返回一个 false 值。
+    下面的实例解释了这个概念：
+
+    # 定义类
+    class Box
+       # 构造器方法
+       def initialize(w,h)
+          @width, @height = w, h
+       end
+
+       # 访问器方法
+       def getWidth
+          @width
+       end
+       def getHeight
+          @height
+       end
+
+       # 设置器方法
+       def setWidth=(value)
+          @width = value
+       end
+       def setHeight=(value)
+          @height = value
+       end
+    end
+
+    # 创建对象
+    box = Box.new(10, 20)
+
+    # 让我们冻结该对象
+    box.freeze
+    if( box.frozen? )
+       puts "Box object is frozen object"
+    else
+       puts "Box object is normal object"
+    end
+
+    # 现在尝试使用设置器方法
+    box.setWidth = 30
+    box.setHeight = 50
+
+    # 使用访问器方法
+    x = box.getWidth()
+    y = box.getHeight()
+
+    puts "Width of the box is : #{x}"
+    puts "Height of the box is : #{y}"
+    当上面的代码执行时，它会产生以下结果：
+
+    Box object is frozen object
+    test.rb:20:in `setWidth=': can't modify frozen object (TypeError)
+            from test.rb:39
