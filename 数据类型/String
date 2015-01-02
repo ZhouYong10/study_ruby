@@ -1,0 +1,93 @@
+Ruby使用String类的对象表示文本。
+字符串是可变的对象。
+
+字符串字面量：
+    Ruby提供多种将字符串直接嵌入程序中的方法。
+
+    1.由单引号引用的字符串字面量：
+        单引号之间的文本就是字符串的值。例如：
+            'This is a simple Ruby string literal'
+
+        如果需要在一个由单引号引用的字符串字面量里放入一个撇号，那么就需要在撇号前面放置一个反斜线，
+        这样Ruby解释器就不会把它当成字符串的终结符了：
+            'Won\'t you read O\'Reilly\'s book?'
+
+        反斜线还可以用于转义另一个反斜线，这样第二个反斜线就不再是转义字符了：
+            'This string literal ends with a single backslash: \\'
+            'This is a backslash-quote: \\\''
+            'Two backslashes: \\\\'
+
+        在单引号引用的字符串里，如果一个反斜线后面的字符不是单引号，也不是反斜线，那么这个反斜线就没有任何特殊作用。
+        因此，大多数情况下，在单引号字符串里不需要成对的使用反斜线:
+            'a\b' == 'a\\b'
+
+        单引号字符串可以跨越多行，得到的字符串字面量里包含换行字符，无法用一个反斜线来转义行尾的换行符：
+            'This is a long string literal \
+            that includes a backslash and a newline'
+
+    2.由双引号引用的字符串字面量：
+        双引号引用的字符串支持更多的转义字符：
+            \a    BEL字符（ASCII码为7），会产生一次控制台铃声，等价于\C-g或\007
+            \b    退格键字符（ASCII码为8），等价于\C-h或\010
+            \e    ESC字符（ASCII码为27），等价于\033
+            \f    换页符（ASCII码为12），等价于\C-l或\014
+            \n    换行符（ASCII码为10），等价于\C-j或\012
+            \r    回车符（ASCII码为13），等价于\C-m或\015
+            \s    空格符（ASCII码为32）
+            \t    水平制表符（ASCII码为9），等价于\C-i或\011
+            \v    垂直制表符（ASCII码为11），等价于\C-k或\-13
+
+        由双引号引用的字符串字面量里面可以包含任意的Ruby表达式，当创建字符串的时候字符串字面量对表达式进行求值，
+        然后将值转换成字符串并插回到原字符串中，用于替换原表达式。这些表达式位于大括号中，且大括号前有一个‘#’字符，
+        整个结构位于双引号的字符串中：
+            "360 degrees = #{2*Math::PI} radians"    #等于 "360 degrees = 6.28318530717959 radians"
+        当要插入到字符串字面量中的表达式是全局变量，实例变量，类变量时，大括号可以省略：
+            $salutation = 'hello'
+            "#$salutation world"    #等于 "hello world"
+        当不希望‘#’字符被特殊处理时，可以在它前面用一个反斜线来进行转义。只有当‘#’字符后面是{、$、或@字符时，才需要转义：
+            "My phone #: 555-1234"                  #不需要转义
+            "Use \#{ to interpolate expressions"    #需要转义
+
+        双引号字符串可以跨越多行，除非使用一个反斜线进行转义，否则每一行的终结符将成为字符串字面量的一部分：
+            "This string literal
+            has two lines \
+            but is written on three"
+
+    3.将一个长字符串书写到多行中：
+        如果需要将字符串分布到多行里而且不引入换行符，那么只需要将其划分成彼此相邻的字符串字面量即可，
+        Ruby解释器会在分析代码时把它们连接在一起：
+            message1 = 'These three literals are '\
+            'concatenated into one by the interpreter. '\
+            'The resulting string contains no newlines.'
+
+            message2 = "This string has three lines. "\
+            "It is written as three adjacent literals "\
+            "separated by escaped newlines."
+
+    4.字符串字面量的分界符：
+        当一段文本里含有引号时，将其作为由单引号或双引号引用的字符串字面量来处理就会显得比较麻烦。
+        Ruby支持一种更为简单的语法来引用字符串字面量（对于正则表达式和数组字面量也有这样的语法支持）。
+        以‘%q’开头的字符串字面量将遵循单引号引用字符串的规则；
+        以‘%Q’或‘%’开头的字符串字面量将遵循双引号引用的字符串的规则。
+        紧跟在‘q'或‘Q’之后的第一个字符是该字符串的分界符，从分界符后的第一个字符开始直到下一个相匹配的分界符（未被转义）
+        之间的内容就是该字符串的内容。
+        如果开始分界符为(,[,{,<,那么与之相匹配的分界符就是),],},>.否则结束分界符就是和起始分界符同样的字符：
+            %q(Don't worry about escaping ' characters!)
+            %Q|"How are you?", he said.|
+            %-This string literal ends with a newline\n-
+        如果需要对分界符进行转义，那么既可以使用反斜线转义，也可以选择使用另一个分界符：
+            %q_This string literal contains \_underscores\__
+            %Q!Just use  _different_ delimiter\!!
+
+    5.Here document:
+        对于很长的字符串字面量来说，其内容可能包含类各种字符，所以无论使用哪个字符作为分界符，都要担心字面量里的字符转义问题。
+        Ruby对于这个问题的解决方法是允许里指定一个任意的字符序列来作为分界符。
+
+        Here document以<<或<<-开头，后面紧跟（为了避免与左移位操作符<<混淆，不允许有空格）一个用于指定结尾分界符的标识符
+        或字符串，从下一行开始直到该分界符单独出现在一行为止(且位于该行开头)，其间的文本都被作为该字符串字面量的内容：
+            document = <<HERE
+            This is a string literal.
+            It has two lines and abruptly ends...
+            HERE
+
+
