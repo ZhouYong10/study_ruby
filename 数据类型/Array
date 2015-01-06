@@ -1,0 +1,6 @@
+创建一个数组对象的方式：
+    array = Array.new
+
+    array = []
+
+    array = %w()

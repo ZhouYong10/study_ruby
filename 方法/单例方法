@@ -1,0 +1,32 @@
+同一份设计蓝图(类),不同的实例对象,可以表现出不同的行为特征,
+这种(不牵涉继承的)多态性在 Java 这样的静态语言里,通过方法重载得到具体实现。
+我们知道Ruby中没有方法的重载,那么 Ruby 如何来反映不同实例对象的不同行为特征呢?
+
+在 Ruby 里,可以给具体的实例对象添加实例方法,这个方法只属于这个实例对象,我们把这样的方法称之为单例方法。
+看程序
+class Person
+    def talk
+        puts "Hi! "
+    end
+end
+
+p1=Person.new
+p2=Person.new
+
+def p2.talk
+    #定义单例方法 p2.talk
+    puts "Here is p2. "
+end
+
+def p2.laugh
+    #定义单例方法 p2. laugh
+    puts "ha,ha,ha... "
+end
+
+p1.talk # Hello!
+p2.talk # Here is p2.
+p2.laugh # ha,ha,ha...
+
+单例方法也叫作单件方法。定义单例方法,首先要生成一个实例对象,其次,要在方法名前加上对象名和一个点号“.”。
+程序中,对象 p1 不可以 laugh ,laugh 方法只属于 p2 对象。
+实例方法,属于类的每个实例对象。单例方法只出现在单个实例对象中。用单例方法可以极大地丰富多态性在 Ruby 中的表现力。

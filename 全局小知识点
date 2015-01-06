@@ -1,2 +1,40 @@
 puts和print都是用来向控制台打印字符的，其中puts带回车换行符，print不带。
 
+
+在Ruby中，一个常规的方法名是简单的文字与数字混合编排的字符串。如果一个方法对所执行的对象有潜在的破坏性，则该方法常常以感叹号结尾：
+    2.1.5 :001 > fox = "The quick brown fox"
+     => "The quick brown fox"
+    2.1.5 :002 > fox.upcase
+     => "THE QUICK BROWN FOX"
+    2.1.5 :003 > puts fox
+    The quick brown fox
+     => nil
+    2.1.5 :004 > fox.upcase!
+     => "THE QUICK BROWN FOX"
+    2.1.5 :005 > puts fox
+    THE QUICK BROWN FOX
+     => nil
+如上，fox变量的内容被upcase!方法修改了。
+
+标点符号也会用在返回布尔值的方法名中，布尔值是一个真值或假值；这些值常作为回答yes或no问题的方法的返回值。这样的方法名以问号结尾：
+    2.1.5 :007 > fox.empty?
+     => false
+    2.1.5 :008 > fox.is_a? String
+     => true
+
+
+在许多语言里，++和--操作符用来对变量进行自增或自减。但在Ruby中不支持这两个操作符，而是需要使用+=操作符。
+
+
+Ruby中的所有方法都有返回值。或者是显式的，或者是隐式的。
+    要显式的返回一个值，可以在方法体中使用return语句：
+        def toot_horn
+            return "toooot!"
+        end
+
+    如果不使用返回值语句，最后语句的执行结果就用作返回值。
+        def toot_loud_horn
+            "toooot!".upcase
+        end
+
+
